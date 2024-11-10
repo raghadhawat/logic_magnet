@@ -1,5 +1,3 @@
-from game_levels import GameLevels
-
 
 class GamePlay:
     def __init__(self, game_level):

@@ -51,7 +51,7 @@ def setup_levels():
     level5.place_item(1, 2, 'S')
     level5.place_item(2, 2, 'S')
     level5.place_item(0, 0, 'C')
-    level5.place_item(0, 2, 'R')
+    level5.place_item(0, 2, 'C')
     level5.place_item(3, 0, 'C')
     level5.place_item(3, 1, 'P')
     game_levels.add_level(level5)

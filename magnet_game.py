@@ -37,51 +37,36 @@ class MagnetsGame(Grid):
 
         self.apply_rules_red(row, col)
 
+
+
+
+    def apply_rules_purple_recursive(self, row, col, row_delta, col_delta):
+     next_row, next_col = row + row_delta, col + col_delta
+
+     if not self.is_valid_position(next_row, next_col):
+        # print('finish')
+        return
+    #  print(col)
+    #  print(row)
+     self.apply_rules_purple_recursive(next_row, next_col, row_delta, col_delta)
+     next_cell_value = self.grid[next_row][next_col]
+    #  print(col)
+    #  print(row)
+     if (next_cell_value == '.' or next_cell_value == 'C') and (self.grid[row][col]=='R' or self.grid[row][col]=='S'):
+        self.grid[next_row][next_col], self.grid[row][col] = self.grid[row][col], ('C' if (row, col) in self.circles_positions else '.')
+
+
+
     def apply_rules_purple(self, row, col):
-        for r in range(row-1, -1, -1):
-            if self.is_valid_position(r, col) and (self.grid[r][col] == 'S' or self.grid[r][col] == 'R'):
-                if r - 1 >= 0 and (self.grid[r - 1][col] == '.' or self.grid[r - 1][col] == 'C'):
-                    self.grid[r][col], self.grid[r - 1][col] = ('C' if (r, col) in self.circles_positions else '.'), self.grid[r][col]
-                elif r - 1 >= 0 and (self.grid[r - 1][col] == 'S' or self.grid[r - 1][col] == 'R'):
-                    if r - 2 >= 0:
-                        self.grid[r - 2][col] = self.grid[r - 1][col] 
-                    self.grid[r][col], self.grid[r - 1][col]  = ('C' if (r, col) in self.circles_positions else '.'), self.grid[r][col]
-                    
-                break
+     directions = [(0, 1), (0, -1), (1, 0), (-1, 0) ]  # right, left, down, up
 
-        for r in range(row+1, self.rows):
-            if self.is_valid_position(r, col) and (self.grid[r][col] == 'S' or self.grid[r][col] == 'R') :
-                if r + 1 < self.rows and (self.grid[r + 1][col] == '.' or self.grid[r + 1][col] == 'C'):
-                    self.grid[r][col], self.grid[r + 1][col] = ('C' if (r, col) in self.circles_positions else '.'), self.grid[r][col]
-                elif r + 1 < self.rows and (self.grid[r + 1][col] == 'S' or self.grid[r + 1][col] == 'R'):
-                    if r + 2 < self.rows:
-                        self.grid[r + 2][col] = self.grid[r + 1][col]
-                    self.grid[r][col], self.grid[r + 1][col] = ('C' if (r, col) in self.circles_positions else '.'), self.grid[r][col]
-                    
-                break
-
-        for c in range(col-1, -1, -1):
-            if self.is_valid_position(row, c) and (self.grid[row][c] == 'S' or self.grid[row][c] == 'R'):
-                if c - 1 >= 0 and (self.grid[row][c - 1] == '.' or self.grid[row][c - 1] == 'C'):
-                    self.grid[row][c], self.grid[row][c - 1] = ('C' if (row, c) in self.circles_positions else '.'), self.grid[row][c]
-                elif c - 1 >= 0 and (self.grid[row][c - 1] == 'S' or self.grid[row][c - 1] == 'R'):
-                    if c - 2 >= 0:
-                        self.grid[row][c - 2] = self.grid[row][c - 1]
-                    self.grid[row][c], self.grid[row][c - 1] = ('C' if (row, c) in self.circles_positions else '.'), self.grid[row][c]
-                    
-                break
-
-        for c in range(col+1, self.cols):
-            if self.is_valid_position(row, c) and (self.grid[row][c] == 'S' or self.grid[row][c] == 'R'):
-                if c + 1 < self.cols and (self.grid[row][c + 1] == '.' or self.grid[row][c + 1] == 'C'):
-                    self.grid[row][c], self.grid[row][c + 1] = ('C' if (row, c) in self.circles_positions else '.'), self.grid[row][c]
-                elif c + 1 < self.cols and (self.grid[row][c + 1] == 'S' or self.grid[row][c + 1] == 'R'):
-                    if c + 2 < self.cols:
-                        self.grid[row][c + 2] = self.grid[row][c + 1]
-                    self.grid[row][c], self.grid[row][c + 1] = ('C' if (row, c) in self.circles_positions else '.'), self.grid[row][c]
-                    
-                break
+     for direction in directions:
+        row_delta, col_delta = direction
+        self.apply_rules_purple_recursive(row +row_delta, col+col_delta, row_delta, col_delta)
     
+
+
+
     def apply_rules_red(self, row, col):
         for r in range(row-1, -1, -1):
             if self.is_valid_position(r, col) and (self.grid[r][col] == 'S' or self.grid[r][col] == 'P'):
