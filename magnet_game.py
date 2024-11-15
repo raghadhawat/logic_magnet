@@ -5,6 +5,15 @@ class MagnetsGame(Grid):
         super().__init__(rows, cols)
         self.prev_magnet_position = None
 
+    def clone(self):
+        # Create a new instance of MagnetsGame
+        new_game = MagnetsGame(self.rows, self.cols)
+        # Deep copy the grid
+        new_game.grid = [row[:] for row in self.grid]
+        # Copy the circles positions
+        new_game.circles_positions = self.circles_positions[:]
+        return new_game    
+
     def move_magnet_purple(self, row, col):
         if  not self.is_valid_position(row, col) :
             print("Cannot move the magnet to an invalid position!")
