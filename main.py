@@ -1,6 +1,7 @@
 from bfs import BFS
 from dfs import DFS
 from game_play import GamePlay
+from hill_climbing import HillClimbing
 from the_levels import setup_levels
 from tree_node import create_move_tree_for_purple, print_tree
 from ucs import UCS 
@@ -18,8 +19,11 @@ selected_level_num = int(input("Choose a level to start (enter the level number)
 selected_level = game_levels.select_level(selected_level_num)
 
 
-ucs = UCS(selected_level)
-ucs.search()
+hillClimbimg= HillClimbing(selected_level)
+hillClimbimg.search()
+
+# ucs = UCS(selected_level)
+# ucs.search()
 
 # dfs = DFS(selected_level)
 # dfs.search()
